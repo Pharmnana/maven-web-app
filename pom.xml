@@ -103,7 +103,7 @@
 	    
 	    <snapshotRepository>
 	      <id>nexus</id>
-	      <name>Acada Learning Snapshot Nexus Repository</name>
+	      <name>Pharmnana Snapshots Nexus Repositoryy</name>
 	      <url>http://172.31.12.25:8081/repository/Maven-Web-App-Snapshot/</url>
 	    </snapshotRepository>
 	    
