@@ -60,13 +60,16 @@ pipeline {
     }
     success {
       echo "Deploying to ${env.DEPLOY_ENV} tomcat successful"
-      emailext  body: ' Hello Team Lead, the project titled ${JOB_NAME} located in ${JOB_URL} \
+    script {  
+        emailext  body: ' Hello Team Lead, the project titled ${JOB_NAME} located in ${JOB_URL} \
                        has been successfully deployed. ' 
-                subject: ' Deploy Success '
-                to: ' devopsnancy@gmail.com '
+                  subject: ' Deploy Success '
+                  to: ' devopsnancy@gmail.com '
+    }
     }
     failure {
       echo "Deploying to ${env.DEPLOY_ENV} failed"
+    script {  
       emailext  body: ' Hello Team Lead, unfortunately, the project titled ${JOB_NAME} located in ${JOB_URL} \
                         failed to deploy. Could you kindly give the team a few days to troubleshoot? '
                 subject: ' Deploy failure ' 
