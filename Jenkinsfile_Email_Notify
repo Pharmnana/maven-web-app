@@ -18,6 +18,11 @@ pipeline {
         sh 'mvn package'
       }
     }
+    stage('Test'){
+      steps{
+        sh 'mvn sonar:sonar'
+      }
+    }
     stage('Nexus'){
       steps{
         sh 'mvn deploy'
