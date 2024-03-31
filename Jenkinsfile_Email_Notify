@@ -27,7 +27,7 @@ pipeline {
       steps{
         echo 'Seeking approval'
         echo 'Sending email to team lead'
-        emailext body: 'Hello Team Lead, Good news, I have just concluded the jenkins pipeline script and 
+        emailext body: 'Hello Team Lead, Good news, I have just concluded the jenkins pipeline script and \n
                         awaiting your authorization to deploy the project titled ${JOB_NAME} located in ${JOB_URL} .', 
         subject: 'Approval request to deploy', 
         to: 'devopsnancy@gmail.com'
