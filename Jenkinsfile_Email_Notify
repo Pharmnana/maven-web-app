@@ -27,10 +27,10 @@ pipeline {
       steps{
         echo 'Seeking approval'
         echo 'Sending email to team lead'
-        emailext body: 'Hello Team Lead, Good news, I have just concluded the jenkins pipeline script and \
-                        awaiting your authorization to deploy the project titled ${JOB_NAME} located in ${JOB_URL} .'
-        subject: 'Approval request to deploy' 
-        to: 'devopsnancy@gmail.com',
+        emailext body: ' Hello Team Lead, Good news, I have just concluded the jenkins pipeline script and \
+                        awaiting your authorization to deploy the project titled ${JOB_NAME} located in ${JOB_URL} . '
+        subject: ' Approval request to deploy ' 
+        to: ' devopsnancy@gmail.com '
         timeout(time: 2, unit: "DAYS"){
         input message: 'Approve to deploy to production'
         }
@@ -58,17 +58,17 @@ pipeline {
     }
     success {
       echo "Deploying to ${env.DEPLOY_ENV} tomcat successful"
-      emailext  body: 'Hello Team Lead, the project titled ${JOB_NAME} located in ${JOB_URL} \
-                       has been successfully deployed.' 
-                subject: 'Deploy Success',
-                to: 'devopsnancy@gmail.com',
+      emailext  body: ' Hello Team Lead, the project titled ${JOB_NAME} located in ${JOB_URL} \
+                       has been successfully deployed. ' 
+                subject: ' Deploy Success '
+                to: ' devopsnancy@gmail.com '
     }
     failure {
       echo "Deploying to ${env.DEPLOY_ENV} failed"
-      emailext  body: 'Hello Team Lead, unfortunately, the project titled ${JOB_NAME} located in ${JOB_URL} \
-                        failed to deploy. Could you kindly give the team a few days to troubleshoot?'
-                subject: 'Deploy Success' 
-                to: 'devopsnancy@gmail.com'
+      emailext  body: ' Hello Team Lead, unfortunately, the project titled ${JOB_NAME} located in ${JOB_URL} \
+                        failed to deploy. Could you kindly give the team a few days to troubleshoot? '
+                subject: ' Deploy failure ' 
+                to: ' devopsnancy@gmail.com '
     }
   }
 }
