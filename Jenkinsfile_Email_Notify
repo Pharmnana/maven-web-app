@@ -29,8 +29,8 @@ pipeline {
         echo 'Sending email to team lead'
         emailext body: 'Hello Team Lead, Good news, I have just concluded the jenkins pipeline script and \
                         awaiting your authorization to deploy the project titled ${JOB_NAME} located in ${JOB_URL} .'
-        subject: 'Approval request to deploy' 
-        to: 'devopsnancy@gmail.com'
+        subject: 'Approval request to deploy', 
+        to: 'devopsnancy@gmail.com',
         timeout(time: 2, unit: "DAYS"){
         input message: 'Approve to deploy to production'
         }
@@ -60,8 +60,8 @@ pipeline {
       echo "Deploying to ${env.DEPLOY_ENV} tomcat successful"
       emailext  body: 'Hello Team Lead, the project titled ${JOB_NAME} located in ${JOB_URL} \
                        has been successfully deployed.' 
-                subject: 'Deploy Success'
-                to: 'devopsnancy@gmail.com'
+                subject: 'Deploy Success',
+                to: 'devopsnancy@gmail.com',
     }
     failure {
       echo "Deploying to ${env.DEPLOY_ENV} failed"
