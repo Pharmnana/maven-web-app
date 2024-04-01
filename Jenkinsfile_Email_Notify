@@ -70,7 +70,7 @@ pipeline {
       echo "Deploying to ${env.DEPLOY_ENV} failed"
       emailext body: 'Hello Team Lead, unfortunately, the project titled ${JOB_NAME} located in ${JOB_URL} failed to deploy. Could you kindly give the team a few days to troubleshoot?' ,
               subject: 'Deploy failure' ,
-              to: 'nancycsunday@gmail.com, devopsnancy@gmail.com'
+              to: 'nancycsunday@gmail.com, devopsnancy@gmail.com, ejirolol50@gmail.com'
   }
 }
 }
