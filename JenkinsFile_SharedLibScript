@@ -1,0 +1,77 @@
+@Library('Cohort14-SharedLibrary')_
+pipeline {
+  agent any
+  tools {
+    maven 'maven3.9.6'
+  }
+  environment {
+    DEPLOY_ENV = 'staging'
+    GIT_REPO_URL = 'https://github.com/Pharmnana/maven-web-app.git'
+  }
+  stages{
+    stage('Clone from Github'){
+      steps{
+        git "${GIT_REPO_URL}"
+      }
+    }
+    stage('Building with Maven'){
+      steps{
+        cohort14('Build')
+      }
+    }
+    stage('Testing with SonarQube'){
+      steps{
+        cohort14('Test')
+      }
+    }
+    stage('Deploying to Nexus'){
+      steps{
+        cohort14('Deploy')
+      }
+    }
+    stage('Approval'){
+      steps{
+        echo 'Seeking approval'
+        echo 'Sending email to team lead'
+        emailext body: 'Hello Team Lead, Good news, I have just concluded the jenkins pipeline script and awaiting your authorization to deploy the project titled ${JOB_NAME} located in ${JOB_URL}' ,
+                  subject: 'Approval request to deploy' ,
+                  to: 'nancycsunday@gmail.com, devopsnancy@gmail.com'
+        timeout(time: 2, unit: "DAYS"){
+        input message: 'Approve to deploy to production'
+        }
+    }
+}
+    stage('Deployment stage'){
+      steps{
+        script {
+          if (env.DEPLOY_ENV == 'staging'){
+              echo 'Deploying to production tomcat_1'
+            deploy adapters: [tomcat9(credentialsId: 'tomcat_cred', path: '', url: 'http://3.133.160.127:8000/')], contextPath: null, war: 'target/*war'
+          }
+          else if (env.DEPLOY_ENV == 'production'){
+            echo 'Deploying to production tomcat_2'
+            deploy adapters: [tomcat9(credentialsId: 'tomcat_cred', path: '', url: 'http://3.133.160.127:8000/')], contextPath: null, war: 'target/*war'
+          }
+        }
+      }
+    }
+  }
+  
+  post {
+    always {
+      echo "I am done"
+    }
+    success {
+      echo "Deploying to ${env.DEPLOY_ENV} tomcat successful" 
+      emailext  body: 'Hello Team Lead, the project titled ${JOB_NAME} located in ${JOB_URL} has been successfully deployed.' ,
+          subject: 'Deploy Success' ,
+          to: 'nancycsunday@gmail.com, devopsnancy@gmail.com' 
+    }
+    failure {
+      echo "Deploying to ${env.DEPLOY_ENV} failed"
+      emailext body: 'Hello Team Lead, unfortunately, the project titled ${JOB_NAME} located in ${JOB_URL} failed to deploy. Could you kindly give the team a few days to troubleshoot?' ,
+              subject: 'Deploy failure' ,
+              to: 'nancycsunday@gmail.com, devopsnancy@gmail.com'
+  }
+}
+}
