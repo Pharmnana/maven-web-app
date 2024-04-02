@@ -24,7 +24,7 @@ pipeline {
     }
     stage('Testing with SonarQube'){
       steps{
-        lib1('Test')
+        lib2('Test')
       }
     }
     stage('Deploying to Nexus'){
