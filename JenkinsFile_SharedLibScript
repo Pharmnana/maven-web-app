@@ -47,7 +47,15 @@ pipeline {
       }
   
   post {
-      lib2('Post')
+    always {
+      echo "I am done"
+    }
+    success {
+        lib2('Success')
+    }
+    failure {
+        lib2('Failure')
+  }
 }
 }
 
