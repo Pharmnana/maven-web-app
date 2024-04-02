@@ -1,4 +1,5 @@
-@Library(['Jenkins_lib1', 'Jenkins_lib2']) _
+@Library(['Jenkins_lib1']) _
+@Library(['Jenkins_lib2']) _
 pipeline {
   agent any
   tools {
