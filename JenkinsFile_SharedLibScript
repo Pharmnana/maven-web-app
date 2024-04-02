@@ -7,8 +7,6 @@ pipeline {
   }
   environment {
     GIT_REPO_URL = 'https://github.com/Pharmnana/maven-web-app.git'
-    STAGING_URL = 'http://35.183.198.83:8000/'
-    PRODUCTION_URL = 'http://3.133.160.127:8000/'
   }
   stages{
     stage('Clone from Github'){
